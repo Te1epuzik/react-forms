@@ -19,6 +19,7 @@ export const Hex2rgb = () => {
 
 		if (!value) {
 			setHexColor('#000');
+			setBackgroundColor('rgb(0, 0, 0)');
 			return;
 		}
 

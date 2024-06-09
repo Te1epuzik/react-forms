@@ -1,0 +1,25 @@
+@import '../../Variables.scss';
+
+.hex2rgb {
+	width: 400px;
+	padding: 40px;
+
+	.hex2rgb__form {
+		display: flex;
+		flex-direction: column; 
+		gap: 20px;
+		font-size: 24px;
+
+		.hex2rgb__input {
+			font-size: inherit;
+			border: solid 1px $color-white;
+			padding: 10px;
+		}
+
+		.hex2rgb__input:focus {
+			font-size: inherit;
+			outline: solid 1px $color-white;
+			outline-offset: -2px;
+		}
+	}
+}

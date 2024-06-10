@@ -1,2 +1,86 @@
 @import '../../Variables.scss';
 
+@mixin border {
+	border: solid 2px $color-black;
+	border-radius: 5px;
+}
+
+.steps {
+	box-sizing: border-box;
+	width: 100%;
+	min-width: 600px;
+	padding: 40px;
+	background-color: $color-white;
+	color: $color-black;
+
+	.steps__form {
+		font-size: 18px;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		height: 100px;
+
+		.form-element {
+			font-size: inherit;
+			text-align: left;
+			background: $color-white;
+			color: $color-black;
+			box-sizing: border-box;
+			margin-right: 20px;
+			display: block;
+			height: 40%;
+		}
+
+		.steps__date {
+			@include border;
+			padding: 5px;
+		}
+
+		.steps__date::-webkit-calendar-picker-indicator {
+			display: none;
+		}
+
+		.steps__distance {
+			@include border;
+			padding: 5px;
+		}
+
+		.steps__ok-btn {
+			@include border;
+			margin-right: 0;
+			font-size: 14px;
+			text-transform: uppercase;
+			text-align: center;
+		}
+
+		.steps__date:focus,
+		.steps__distance:focus,
+		.steps__ok-btn:focus {
+			outline: none;
+		}
+	}
+
+	.steps__list {
+		display: flex;
+		flex-direction: column;
+		list-style: none;
+
+		.steps__item {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+
+			.steps__item-delete-btn,
+			.steps__item-edit-btn {
+				cursor: pointer;
+			}
+		}
+	}
+
+	.steps__list--active {
+		@include border;
+		padding: 20px;
+	}
+}

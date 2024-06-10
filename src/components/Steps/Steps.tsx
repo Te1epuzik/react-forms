@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState, useRef } from 'react';
 import classes from './steps.module.scss';
 import { v4 } from 'uuid';
 
@@ -8,23 +8,15 @@ import binIcon from '../../assets/bin.svg';
 
 export const Steps = () => {
 
-	const [date, setDate] = useState('');
-	const [distance, setDistance] = useState('');
+	const inputDistance = useRef<HTMLInputElement>(null);
 	const [stepsList, setStepsList] = useState<TStep[]>([]);
 	const [form, setForm] = useState<TStep>({
 		date: '',
 		distance: '',
 		id: ''
 	});
-
 	const handleFormChange = (event: ChangeEvent<HTMLFormElement>) => {
 		const { value, name } = event.target;
-
-		if (name === 'distance') {
-			setDistance(value);
-		} else if (name === 'date') {
-			setDate(value);
-		}
 
 		setForm(prevForm => ({ ...prevForm, [name]: value }));
 	}
@@ -35,8 +27,6 @@ export const Steps = () => {
 			return;
 		}
 
-		setDate('');
-		setDistance('');
 		setForm({
 			date: '',
 			distance: '',
@@ -60,9 +50,8 @@ export const Steps = () => {
 			distance: currentStep.distance, 
 			id: '' 
 		});
-		setDate(currentStep.date);
-		setDistance(currentStep.distance);
 		setStepsList(stepsList.filter(step => step.id !== id));
+		inputDistance.current?.focus();
 	}
 
 	const handleRemoveStep = (id: string) => {
@@ -80,7 +69,7 @@ export const Steps = () => {
 					htmlFor='date'>{'Дата (ДД.ММ.ГГ)'}</label>
 				<input
 					className={classes['steps__date'] + ' ' + classes['form-element']}
-					value={date}
+					value={form.date}
 					name='date'
 					id='date'
 					type='date' />
@@ -89,11 +78,12 @@ export const Steps = () => {
 					htmlFor='distance'>Пройдено км </label>
 				<input
 					className={classes['steps__distance'] + ' ' + classes['form-element']}
-					value={distance}
+					value={form.distance}
 					name='distance'
 					id='distance'
 					type='text'
-					autoComplete='off' />
+					autoComplete='off'
+					ref={inputDistance} />
 				<button
 					className={classes['steps__ok-btn'] + ' ' + classes['form-element']}
 					type='submit'>ok</button>

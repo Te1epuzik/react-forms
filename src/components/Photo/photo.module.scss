@@ -1,0 +1,111 @@
+@import '../../Variables.scss';
+
+.photo-wrapper {
+	background-color: $color-white;
+
+	.photo {
+		padding: 20px;
+		box-sizing: border-box;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		min-width: 600px;
+		background:
+			linear-gradient(#bbb, transparent 1px),
+			linear-gradient(90deg, #bbb, transparent 1px);
+		background-size: 15px 15px;
+		background-position: center center;
+
+		.photo__selector {
+			position: relative;
+			width: 100%;
+
+			.click-window {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 24px;
+				color: $color-gray;
+				border: solid 2px $color-black;
+				border-radius: 20px;
+				background-color: #fff;
+				position: relative;
+				height: 150px;
+				width: 100%;
+				pointer-events: none;
+				z-index: 1;
+			}
+
+			.photo__loader {
+				cursor: pointer;
+				color: transparent;
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 2;
+			}
+
+			.photo__loader::file-selector-button {
+				display: none;
+			}
+		}
+
+		.photo__loaded {
+			margin-top: 40px;
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+			gap: 5%;
+			width: 100%;
+
+			.photo__inner {
+				position: relative;
+				display: flex;
+				justify-content: center;
+				height: fit-content;
+
+				width: 20%;
+
+				.photo__img {
+					width: 100%;
+					object-fit: contain;
+				}
+
+				.photo__interface {
+					display: none;
+					position: absolute;
+					left: 0;
+					top: 0;
+					bottom: 0;
+					right: 0;
+
+					.photo__remove {
+						display: flex;
+						justify-content: center;
+						padding: 5px;
+						background-color: $color-white;
+						width: 20px;
+						height: 20px;
+						border: solid 1px $color-black;
+						border-radius: 50%;
+						position: absolute;
+						right: -15px;
+						top: -15px;
+						cursor: pointer;
+					}
+				}
+			}
+
+			.photo__inner:hover .photo__interface {
+				display: flex;
+			}
+
+			.photo__inner:nth-child(n + 5) {
+				margin-top: 5%;
+			}
+		}
+	}
+}

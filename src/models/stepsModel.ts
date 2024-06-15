@@ -1,5 +1,5 @@
 export type TStep = {
-	date: string;
-	distance: string;
+	date: string | undefined;
+	distance: string | undefined;
 	id: string;
 }

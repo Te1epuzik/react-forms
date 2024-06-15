@@ -15,7 +15,7 @@ export const Steps = () => {
 		distance: '',
 		id: ''
 	});
-	const handleFormChange = (event: ChangeEvent<HTMLFormElement>) => {
+	const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const { value, name } = event.target;
 
 		setForm(prevForm => ({ ...prevForm, [name]: value }));
@@ -42,13 +42,14 @@ export const Steps = () => {
 		);
 	}
 
+
+
 	const handleEditStep = (id: string) => {
-		// const currentStep: TStep = stepsList.find((step: TStep) => step.id === id);
-		const currentStep: TStep = stepsList.filter(step => step.id === id)[0];
+		const currentStep: TStep | undefined = stepsList.find((step: TStep) => step.id === id);
 		setForm({
-			date: currentStep.date, 
-			distance: currentStep.distance, 
-			id: '' 
+			date: currentStep?.date, 
+			distance: currentStep?.distance, 
+			id: ''
 		});
 		setStepsList(stepsList.filter(step => step.id !== id));
 		inputDistance.current?.focus();
@@ -62,13 +63,13 @@ export const Steps = () => {
 		<div className={classes['steps']}>
 			<form
 				className={classes['steps__form']}
-				onSubmit={handleAddStep}
-				onChange={handleFormChange}>
+				onSubmit={handleAddStep}>
 				<label
 					className={classes['form-element']}
 					htmlFor='date'>{'Дата (ДД.ММ.ГГ)'}</label>
 				<input
 					className={classes['steps__date'] + ' ' + classes['form-element']}
+					onChange={handleFormChange}
 					value={form.date}
 					name='date'
 					id='date'
@@ -78,6 +79,7 @@ export const Steps = () => {
 					htmlFor='distance'>Пройдено км </label>
 				<input
 					className={classes['steps__distance'] + ' ' + classes['form-element']}
+					onChange={handleFormChange}
 					value={form.distance}
 					name='distance'
 					id='distance'

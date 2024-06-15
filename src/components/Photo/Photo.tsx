@@ -9,7 +9,7 @@ export const Photo = () => {
 
 	const [dataUrl, setDataUrl] = useState<TDataUrl[]>([])
 
-	const fileToDataUrl = (file: File) => {
+	const fileToDataUrl = (file: File): Promise<string | ArrayBuffer | null> => {
 		return new Promise((resolve, reject) => {
 			const fileReader = new FileReader();
 
@@ -26,7 +26,7 @@ export const Photo = () => {
 	}
 
 	const handleSelect = async (event: ChangeEvent<HTMLInputElement>) => {
-		const files = [...event.target.files];
+		const files: File[] = [...event.target.files as FileList];
 		const urls = await Promise.all(files.map(o => fileToDataUrl(o)));
 		const dataUrls: TDataUrl[] = urls.map(url => {return { url: url, id: v4() }})
 		setDataUrl(prevData => [...prevData, dataUrls]);

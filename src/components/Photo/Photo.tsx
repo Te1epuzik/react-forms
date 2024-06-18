@@ -18,7 +18,7 @@ export const Photo = () => {
 			});
 
 			fileReader.addEventListener('error', () => {
-				reject(new Error(fileReader.error));
+				reject(fileReader.error);
 			});
 
 			fileReader.readAsDataURL(file);
@@ -27,10 +27,19 @@ export const Photo = () => {
 
 	const handleSelect = async (event: ChangeEvent<HTMLInputElement>) => {
 		const files: File[] = [...event.target.files as FileList];
-		const urls = await Promise.all(files.map(o => fileToDataUrl(o)));
-		const dataUrls: TDataUrl[] = urls.map(url => {return { url: url, id: v4() }})
-		setDataUrl(prevData => [...prevData, dataUrls]);
-		console.log(dataUrl)
+		const urls: string[] = [];
+		Promise.all(files.map(file => fileToDataUrl(file)))
+			.then(pictures => {
+				pictures.forEach(picture => {
+					if (typeof picture === 'string') {
+						urls.push(picture);
+					}
+				});
+				console.log(urls)
+				const dataUrls: TDataUrl[] = urls.map(url => { return { url: url, id: v4() } })
+				setDataUrl(prevData => [...prevData, ...dataUrls]);
+			})
+			.catch(error => { new Error(error) });
 	}
 
 	const handlePhotoRemove = (id: string) => {
